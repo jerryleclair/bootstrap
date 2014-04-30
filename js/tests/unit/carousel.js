@@ -4,11 +4,11 @@ $(function () {
 
   test('should provide no conflict', function () {
     var carousel = $.fn.carousel.noConflict()
-    ok(!$.fn.carousel, 'carousel was set back to undefined (org value)')
+    ok(!$.fn.carousel, 'carousel was set back to undefined (orig value)')
     $.fn.carousel = carousel
   })
 
-  test('should be defined on jquery object', function () {
+  test('should be defined on jQuery object', function () {
     ok($(document.body).carousel, 'carousel method is defined')
   })
 
@@ -66,12 +66,38 @@ $(function () {
     }).carousel('next')
   })
 
+  test('should fire slid event with direction', function () {
+    var template = '<div id="myCarousel" class="carousel slide"><div class="carousel-inner"><div class="item active"><img alt=""><div class="carousel-caption"><h4>{{_i}}First Thumbnail label{{/i}}</h4><p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p></div></div><div class="item"><img alt=""><div class="carousel-caption"><h4>{{_i}}Second Thumbnail label{{/i}}</h4><p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p></div></div><div class="item"><img alt=""><div class="carousel-caption"><h4>{{_i}}Third Thumbnail label{{/i}}</h4><p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p></div></div></div><a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a><a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a></div>'
+    $.support.transition = false
+    stop()
+    $(template).on('slid.bs.carousel', function (e) {
+      e.preventDefault()
+      ok(e.direction)
+      ok(e.direction === 'right' || e.direction === 'left')
+      start()
+    }).carousel('next')
+  })
+
   test('should fire slide event with relatedTarget', function () {
     var template = '<div id="myCarousel" class="carousel slide"><div class="carousel-inner"><div class="item active"><img alt=""><div class="carousel-caption"><h4>{{_i}}First Thumbnail label{{/i}}</h4><p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p></div></div><div class="item"><img alt=""><div class="carousel-caption"><h4>{{_i}}Second Thumbnail label{{/i}}</h4><p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p></div></div><div class="item"><img alt=""><div class="carousel-caption"><h4>{{_i}}Third Thumbnail label{{/i}}</h4><p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p></div></div></div><a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a><a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a></div>'
     $.support.transition = false
     stop()
     $(template)
       .on('slide.bs.carousel', function (e) {
+        e.preventDefault()
+        ok(e.relatedTarget)
+        ok($(e.relatedTarget).hasClass('item'))
+        start()
+      })
+      .carousel('next')
+  })
+
+  test('should fire slid event with relatedTarget', function () {
+    var template = '<div id="myCarousel" class="carousel slide"><div class="carousel-inner"><div class="item active"><img alt=""><div class="carousel-caption"><h4>{{_i}}First Thumbnail label{{/i}}</h4><p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p></div></div><div class="item"><img alt=""><div class="carousel-caption"><h4>{{_i}}Second Thumbnail label{{/i}}</h4><p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p></div></div><div class="item"><img alt=""><div class="carousel-caption"><h4>{{_i}}Third Thumbnail label{{/i}}</h4><p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p></div></div></div><a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a><a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a></div>'
+    $.support.transition = false
+    stop()
+    $(template)
+      .on('slid.bs.carousel', function (e) {
         e.preventDefault()
         ok(e.relatedTarget)
         ok($(e.relatedTarget).hasClass('item'))
@@ -98,7 +124,7 @@ $(function () {
     $('[data-slide]').first().click()
     $('#myCarousel').attr('data-interval', 1860)
     $('[data-slide]').first().click()
-    ok($('#myCarousel').data('bs.carousel').options.interval == 1814, 'attributes should be read only on intitialization')
+    ok($('#myCarousel').data('bs.carousel').options.interval == 1814, 'attributes should be read only on initialization')
     $('#myCarousel').remove()
 
     template.attr('data-interval', false)
@@ -106,5 +132,33 @@ $(function () {
     $('#myCarousel').carousel(1)
     ok($('#myCarousel').data('bs.carousel').options.interval === false, 'data attribute has higher priority than default options')
     $('#myCarousel').remove()
+  })
+
+  test('should skip over non-items', function () {
+    $.support.transition = false
+
+    var $template = $(
+        '<div id="myCarousel" class="carousel" data-interval="1814">'
+      + '<div class="carousel-inner">'
+      + '<div class="item active">'
+      + '<img alt="">'
+      + '</div>'
+      + '<script type="text/x-metamorph" id="thingy"></script>'
+      + '<div class="item">'
+      + '<img alt="">'
+      + '</div>'
+      + '<div class="item">'
+      + '</div>'
+      + '</div>'
+      + '</div>'
+    )
+
+    $template.carousel()
+
+    equal($template.find('.item')[0], $template.find('.active')[0], 'the first carousel item should be active')
+
+    $template.carousel(1)
+
+    equal($template.find('.item')[1], $template.find('.active')[0], 'the second carousel item should be active')
   })
 })
