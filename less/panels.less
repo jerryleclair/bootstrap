@@ -20,7 +20,7 @@
 
 // Optional heading
 .panel-heading {
-  padding: 10px 15px;
+  padding: @panel-heading-padding;
   border-bottom: 1px solid transparent;
   .border-top-radius((@panel-border-radius - 1));
 
@@ -43,7 +43,7 @@
 
 // Optional footer (stays gray in every modifier class)
 .panel-footer {
-  padding: 10px 15px;
+  padding: @panel-footer-padding;
   background-color: @panel-footer-bg;
   border-top: 1px solid @panel-inner-border;
   .border-bottom-radius((@panel-border-radius - 1));
@@ -186,8 +186,6 @@
   }
 }
 
-
-<<<<<<< HEAD
 // Optional heading
 .panel-heading {
   padding: @panel-heading-padding;
@@ -219,9 +217,6 @@
   .border-bottom-radius((@panel-border-radius - 1));
 }
 
-
-=======
->>>>>>> upstream/master
 // Collapsable panels (aka, accordion)
 //
 // Wrap a series of panels in `.panel-group` to turn them into an accordion with
