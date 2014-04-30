@@ -173,7 +173,7 @@
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
-  background-color: #357ebd;
+  background-color: #0572c7;
   background-image: -webkit-linear-gradient(top, #0680e0 0%, #0572c7 100%);
   background-image:      -o-linear-gradient(top, #0680e0 0%, #0572c7 100%);
   background-image: -webkit-gradient(linear, left top, left bottom, from(#0680e0), to(#0572c7));
@@ -332,7 +332,7 @@
 .list-group-item.active,
 .list-group-item.active:hover,
 .list-group-item.active:focus {
-  text-shadow: 0 -1px 0 #3071a9;
+  text-shadow: 0 -1px 0 #0564ae;
   background-image: -webkit-linear-gradient(top, #0680e0 0%, #056bbb 100%);
   background-image:      -o-linear-gradient(top, #0680e0 0%, #056bbb 100%);
   background-image: -webkit-gradient(linear, left top, left bottom, from(#0680e0), to(#056bbb));
