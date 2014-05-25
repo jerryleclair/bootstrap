@@ -106,6 +106,7 @@ module.exports = function (grunt) {
           'js/affix.js'
         ],
         dest: 'dist/js/<%= pkg.name %>.js'
+        // dest: '../../htdocs/assets/bs/js/<%= pkg.name %>.js'
       }
     },
 
@@ -115,33 +116,34 @@ module.exports = function (grunt) {
           banner: '<%= banner %>'
         },
         src: '<%= concat.bootstrap.dest %>',
-        dest: 'dist/js/<%= pkg.name %>.min.js'
-      },
-      customize: {
-        options: {
-          preserveComments: 'some'
-        },
-        src: [
-          'docs/assets/js/_vendor/less.min.js',
-          'docs/assets/js/_vendor/jszip.min.js',
-          'docs/assets/js/_vendor/uglify.min.js',
-          'docs/assets/js/_vendor/blob.js',
-          'docs/assets/js/_vendor/filesaver.js',
-          'docs/assets/js/raw-files.min.js',
-          'docs/assets/js/_src/customizer.js'
-        ],
-        dest: 'docs/assets/js/customize.min.js'
-      },
-      docsJs: {
-        options: {
-          preserveComments: 'some'
-        },
-        src: [
-          'docs/assets/js/_vendor/holder.js',
-          'docs/assets/js/_src/application.js'
-        ],
-        dest: 'docs/assets/js/docs.min.js'
-      }
+        // dest: 'dist/js/<%= pkg.name %>.min.js'
+        dest: '../../htdocs/assets/bs/js/<%= pkg.name %>.min.js'
+      }//,
+      // customize: {
+      //   options: {
+      //     preserveComments: 'some'
+      //   },
+      //   src: [
+      //     'docs/assets/js/_vendor/less.min.js',
+      //     'docs/assets/js/_vendor/jszip.min.js',
+      //     'docs/assets/js/_vendor/uglify.min.js',
+      //     'docs/assets/js/_vendor/blob.js',
+      //     'docs/assets/js/_vendor/filesaver.js',
+      //     'docs/assets/js/raw-files.min.js',
+      //     'docs/assets/js/_src/customizer.js'
+      //   ],
+      //   dest: 'docs/assets/js/customize.min.js'
+      // },
+      // docsJs: {
+      //   options: {
+      //     preserveComments: 'some'
+      //   },
+      //   src: [
+      //     'docs/assets/js/_vendor/holder.js',
+      //     'docs/assets/js/_src/application.js'
+      //   ],
+      //   dest: 'docs/assets/js/docs.min.js'
+      // }
     },
 
     qunit: {
@@ -181,9 +183,12 @@ module.exports = function (grunt) {
           cleancss: true
         },
         files: {
-          'dist/css/<%= pkg.name %>.min.css': 'dist/css/<%= pkg.name %>.css',
-          'dist/css/<%= pkg.name %>-rtl.min.css': 'dist/css/<%= pkg.name %>-rtl.css',
-          'dist/css/<%= pkg.name %>-theme.min.css': 'dist/css/<%= pkg.name %>-theme.css'
+          // 'dist/css/<%= pkg.name %>.min.css': 'dist/css/<%= pkg.name %>.css',
+          // 'dist/css/<%= pkg.name %>-rtl.min.css': 'dist/css/<%= pkg.name %>-rtl.css',
+          // 'dist/css/<%= pkg.name %>-theme.min.css': 'dist/css/<%= pkg.name %>-theme.css'
+          '../../htdocs/assets/bs/css/<%= pkg.name %>.min.css': 'dist/css/<%= pkg.name %>.css',
+          '../../htdocs/assets/bs/css/<%= pkg.name %>-rtl.min.css': 'dist/css/<%= pkg.name %>-rtl.css',
+          '../../htdocs/assets/bs/css/<%= pkg.name %>-theme.min.css': 'dist/css/<%= pkg.name %>-theme.css'
         }
       }
     },
@@ -203,16 +208,16 @@ module.exports = function (grunt) {
           map: true
         },
         src: 'dist/css/<%= pkg.name %>-theme.css'
-      },
-      docs: {
-        src: 'docs/assets/css/_src/docs.css'
-      },
-      examples: {
-        expand: true,
-        cwd: 'docs/examples/',
-        src: ['**/*.css'],
-        dest: 'docs/examples/'
-      }
+      }//,
+      // docs: {
+      //   src: 'docs/assets/css/_src/docs.css'
+      // },
+      // examples: {
+      //   expand: true,
+      //   cwd: 'docs/examples/',
+      //   src: ['**/*.css'],
+      //   dest: 'docs/examples/'
+      // }
     },
 
     cssflip: {
@@ -230,17 +235,17 @@ module.exports = function (grunt) {
       src: [
         'dist/css/bootstrap.css',
         'dist/css/bootstrap-theme.css'
-      ],
-      examples: [
-        'docs/examples/**/*.css'
-      ],
-      docs: {
-        options: {
-          ids: false,
-          'overqualified-elements': false
-        },
-        src: 'docs/assets/css/_src/docs.css'
-      }
+      ]//,
+      // examples: [
+      //   'docs/examples/**/*.css'
+      // ],
+      // docs: {
+      //   options: {
+      //     ids: false,
+      //     'overqualified-elements': false
+      //   },
+      //   src: 'docs/assets/css/_src/docs.css'
+      // }
     },
 
     cssmin: {
@@ -248,14 +253,14 @@ module.exports = function (grunt) {
         compatibility: 'ie8',
         keepSpecialComments: '*',
         noAdvanced: true // turn advanced optimizations off until the issue is fixed in clean-css
-      },
-      docs: {
-        src: [
-          'docs/assets/css/_src/docs.css',
-          'docs/assets/css/_src/pygments-manni.css'
-        ],
-        dest: 'docs/assets/css/docs.min.css'
-      }
+      }//,
+      // docs: {
+      //   src: [
+      //     'docs/assets/css/_src/docs.css',
+      //     'docs/assets/css/_src/pygments-manni.css'
+      //   ],
+      //   dest: 'docs/assets/css/docs.min.css'
+      // }
     },
 
     usebanner: {
@@ -276,26 +281,28 @@ module.exports = function (grunt) {
         expand: true,
         cwd: 'dist/css/',
         src: ['*.css', '!*.min.css'],
-        dest: 'dist/css/'
-      },
-      examples: {
-        expand: true,
-        cwd: 'docs/examples/',
-        src: '**/*.css',
-        dest: 'docs/examples/'
-      },
-      docs: {
-        files: {
-          'docs/assets/css/_src/docs.css': 'docs/assets/css/_src/docs.css'
-        }
-      }
+        // dest: 'dist/css/'
+        dest: '../../htdocs/assets/bs/css/'
+      }//,
+      // examples: {
+      //   expand: true,
+      //   cwd: 'docs/examples/',
+      //   src: '**/*.css',
+      //   dest: 'docs/examples/'
+      // },
+      // docs: {
+      //   files: {
+      //     'docs/assets/css/_src/docs.css': 'docs/assets/css/_src/docs.css'
+      //   }
+      // }
     },
 
     copy: {
       fonts: {
         expand: true,
         src: 'fonts/*',
-        dest: 'dist/'
+        dest: '../../htdocs/assets/bs/'
+        // dest: 'dist/'
       },
       docs: {
         expand: true,
@@ -444,7 +451,10 @@ module.exports = function (grunt) {
   grunt.registerTask('dist', ['clean', 'dist-css', 'copy:fonts', 'dist-js', 'dist-docs']);
 
   // Default task.
-  grunt.registerTask('default', ['test', 'dist', 'build-glyphicons-data', 'build-customizer', 'update-shrinkwrap']);
+  // grunt.registerTask('default', ['test', 'dist', 'build-glyphicons-data', 'build-customizer', 'update-shrinkwrap']);
+
+  // we don't need to do all of that. by default we want to build js, css, copy fonts.
+  grunt.registerTask('default', ['clean', 'dist-css', 'copy:fonts', 'dist-js']);
 
   // Version numbering task.
   // grunt change-version-number --oldver=A.B.C --newver=X.Y.Z
